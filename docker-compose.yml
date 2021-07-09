@@ -1,0 +1,29 @@
+version: "3"
+services:
+  postgres:
+    image: "postgres:latest"
+    restart: 'always'
+    volumes:
+      - /pg-data/:/var/lib/postgres/data
+    environment:
+      POSTGRES_DB: ${DATABASE}
+      POSTGRES_USER: ${USER}
+      POSTGRES_PASSWORD: ${PASSWORD}
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5432:5432"
+  bot:
+    build:
+      ./discordBot
+    depends_on:
+      - postgres
+    volumes:
+    - ./DatabaseConnector:/home/bot/DatabaseConnector
+  scraper:
+    build:
+      ./TibiaScraper
+    depends_on:
+      - postgres
+    volumes:
+      - ./DatabaseConnector:/home/scraper/DatabaseConnector
+

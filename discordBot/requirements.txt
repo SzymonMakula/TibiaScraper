@@ -1,0 +1,6 @@
+discord
+python-dotenv
+sqlalchemy
+python-dotenv
+psycopg2
+langdetect
