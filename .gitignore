@@ -3,3 +3,4 @@ orwell_quotes
 .idea
 .env
 venv
+*.pyc
