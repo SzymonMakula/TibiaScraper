@@ -1,6 +1,8 @@
-discord
+discord.py[voice]
 python-dotenv
 sqlalchemy
 python-dotenv
 psycopg2
 langdetect
+youtube-dl
+emoji

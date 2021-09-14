@@ -52,7 +52,7 @@ class Scraper:
 
     def get_last_page(self, bs):
         link = bs.find_all(class_='PageLink FirstOrLastElement')[1].find('a')['href']
-        last_page = re.match('page=(\d*)', link).group(1)
+        last_page = re.match('.*page=(\d*)', link).group(1)
         return last_page
 
     def format_character_info(self, auction):

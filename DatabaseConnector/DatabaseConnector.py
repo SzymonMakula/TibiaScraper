@@ -3,7 +3,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql import exists
 from sqlalchemy.orm import sessionmaker
 import random
-from dotenv import load_dotenv
 import os
 from langdetect import detect
 
@@ -12,17 +11,16 @@ Base = declarative_base()
 
 class DatabaseConnector:
     def __init__(self):
-        load_dotenv()
-        self.USER = os.getenv('USER')
-        self.PASSWORD = os.getenv('PASSWORD')
+        self.USER = os.getenv('POSTGRES_USER')
+        self.PASSWORD = os.getenv('POSTGRES_PASSWORD')
         self.HOST = os.getenv('HOST')
         self.PORT = os.getenv('PORT')
-        self.DATABASE = os.getenv('DATABASE')
+        self.DATABASE = os.getenv('POSTGRES_DB')
 
     def load_session(self):
         connection_string = "postgresql://" + self.USER + ":" + self.PASSWORD + "@" + self.HOST + "/" \
                              + self.DATABASE
-        engine = sa.create_engine(connection_string, echo=True)
+        engine = sa.create_engine(connection_string, echo=False)
         Base.metadata.create_all(engine)
         Session = sessionmaker()
         Session.configure(bind=engine)
@@ -68,6 +66,13 @@ class DatabaseConnector:
             filter(Characters.nationality == 'pl').order_by(Characters.level.desc())
         session.close()
         return polack_chars
+
+    def get_tibians(self):
+        session = self.load_session()
+        chars = session.query(Characters.name, Characters.level, Characters.vocation, Characters.auction_id, Characters.nationality).\
+            order_by(Characters.level.desc())
+        session.close()
+        return chars
 
 
 class Characters(Base):

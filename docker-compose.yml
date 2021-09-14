@@ -4,26 +4,27 @@ services:
     image: "postgres:latest"
     restart: 'always'
     volumes:
-      - /pg-data/:/var/lib/postgres/data
-    environment:
-      POSTGRES_DB: ${DATABASE}
-      POSTGRES_USER: ${USER}
-      POSTGRES_PASSWORD: ${PASSWORD}
-      POSTGRES_HOST_AUTH_METHOD: trust
+      - ./pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    env_file:
+      - .env
   bot:
-    build:
-      ./discordBot
+    build: ./discordBot
     depends_on:
       - postgres
     volumes:
     - ./DatabaseConnector:/home/bot/DatabaseConnector
+    env_file:
+      - .env
   scraper:
-    build:
-      ./TibiaScraper
+    build: ./TibiaScraper
     depends_on:
       - postgres
     volumes:
       - ./DatabaseConnector:/home/scraper/DatabaseConnector
+    env_file:
+      - .env
 
+volumes:
+  pgdata: {}
