@@ -7,8 +7,8 @@ connector = DatabaseConnector.DatabaseConnector()
 scraper1 = Scraper()
 scraper2 = Scraper()
 
-first_url = 'https://www.tibia.com/charactertrade/?subtopic=currentcharactertrades&currentpage=1'
-second_url = 'https://www.tibia.com/charactertrade/?subtopic=currentcharactertrades&currentpage=100'
+first_url = "https://www.tibia.com/charactertrade/?subtopic=currentcharactertrades&currentpage=1"
+second_url = "https://www.tibia.com/charactertrade/?subtopic=currentcharactertrades&currentpage=100"
 
 
 if __name__ == "__main__":
